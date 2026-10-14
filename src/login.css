@@ -1,0 +1,124 @@
+/* ================= LOGIN PAGE ================= */
+.lg{display:grid;grid-template-columns:1fr 1fr;height:100vh;height:100dvh;overflow:hidden;font-family:Inter,Poppins,system-ui,sans-serif;background:#fff;color:#1e2a44}
+
+/* ---------- left ---------- */
+.lg-left{position:relative;overflow:hidden;padding:clamp(18px,3.5vh,44px) 64px;background:linear-gradient(180deg,#ffffff 0%,#f6fbfb 55%,#eaf3f5 100%)}
+.lg-ring{position:absolute;top:-70px;right:-40px;width:230px;height:230px;border-radius:50%;border:24px solid #e2f3f1;pointer-events:none}
+.lg-dot{position:absolute;left:79%;top:34%;width:26px;height:26px;border-radius:50%;background:#f8cadb;pointer-events:none}
+
+.lg-logo{display:flex;align-items:center;position:relative;z-index:2}
+.lg-logo img{height:clamp(56px,9vh,84px);width:auto;display:block}
+
+.lg-welcome{position:relative;z-index:2;margin-top:clamp(10px,2.5vh,56px)}
+.lg-welcome h1{font-size:clamp(20px,4vh,32px);font-weight:400;color:#1e2a44;line-height:1.2}
+.lg-welcome h2{font-size:clamp(24px,4.8vh,38px);font-weight:700;color:#14264b;line-height:1.2;margin-top:4px}
+.lg-welcome p{margin-top:clamp(6px,1.3vh,16px);max-width:none;font-size:clamp(11.5px,1.9vh,14px);line-height:1.5;color:#5c6780}
+
+/* doctor photo: src/assets/doctor.png  (box = exact image size, cards are placed on it in %) */
+.lg-photo{position:absolute;left:0;bottom:24px;height:60%;aspect-ratio:932/712;z-index:1}
+.lg-photo::before{content:"";position:absolute;inset:0;background:var(--doc) 0 0/100% 100% no-repeat;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 14%),linear-gradient(to right,#000 78%,transparent 100%),linear-gradient(to top,transparent 0%,#000 8%);
+  -webkit-mask-composite:source-in,source-in;
+  mask-image:linear-gradient(to bottom,transparent 0%,#000 14%),linear-gradient(to right,#000 78%,transparent 100%),linear-gradient(to top,transparent 0%,#000 8%);
+  mask-composite:intersect,intersect}
+
+/* floating cards */
+.lg-float{position:absolute;z-index:3;display:flex;align-items:center;gap:8px;padding:8px 14px;white-space:nowrap;background:rgba(255,255,255,.94);border-radius:14px;box-shadow:0 8px 24px rgba(20,38,75,.10);backdrop-filter:blur(4px);cursor:default;
+  opacity:0;animation:cardIn .7s cubic-bezier(.34,1.56,.64,1) forwards,cardFloat 4s ease-in-out infinite;transition:box-shadow .25s,scale .25s}
+.lg-float:hover{scale:1.06;box-shadow:0 14px 30px rgba(20,38,75,.18)}
+.lg-float div{display:flex;flex-direction:column}
+.lg-float b{font-size:12px;font-weight:600;color:#1e2a44}
+.lg-float small{font-size:10.5px;color:#7b8598;margin-top:2px}
+.lg-float .fi{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;transition:transform .3s}
+.lg-float:hover .fi{transform:rotate(-12deg) scale(1.15)}
+.fi.blue{background:#e4edff;color:#3b6fe0}.fi.teal{background:#d8f1ec;color:#14a58f}.fi.purple{background:#ece6ff;color:#7a5af0}
+.lg-float.f1{left:51.7%;top:16%;animation-delay:.3s,1s}
+.lg-float.f2{left:61%;top:34%;animation-delay:.6s,1.6s}
+.lg-float.f3{left:62%;top:52%;animation-delay:.9s,2.2s}
+@keyframes cardIn{from{opacity:0;transform:translateX(50px) scale(.85)}to{opacity:1;transform:none}}
+@keyframes cardFloat{0%,100%{translate:0 0}50%{translate:0 -9px}}
+
+/* other login animations */
+.lg-logo,.lg-welcome h1,.lg-welcome h2,.lg-welcome p{animation:lgUp .6s both}
+.lg-welcome h1{animation-delay:.1s}.lg-welcome h2{animation-delay:.2s}.lg-welcome p{animation-delay:.3s}
+.lg-card{animation:lgCard .7s cubic-bezier(.22,1,.36,1) both}
+.lg-shield{animation:lgPop .8s .3s cubic-bezier(.34,1.56,.64,1) both}
+.lg-dot{animation:cardFloat 5s ease-in-out infinite}
+.lg-ring{animation:ringPulse 6s ease-in-out infinite}
+@keyframes lgUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@keyframes lgCard{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes lgPop{from{opacity:0;transform:scale(.3) rotate(-90deg)}to{opacity:1;transform:none}}
+@keyframes ringPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+.lg-copy{position:absolute;left:64px;bottom:8px;z-index:3;font-size:11px;color:#5c6780}
+
+/* ---------- right ---------- */
+.lg-right{display:grid;place-items:center;padding:16px 40px;min-height:0;background:linear-gradient(180deg,#f7f8fa,#f3f5f8)}
+.lg-card{width:100%;max-width:440px;max-height:100%;background:#fff;border:1px solid #e9ecf1;border-radius:20px;padding:36px 38px 30px;box-shadow:0 10px 40px rgba(20,38,75,.06);display:flex;flex-direction:column}
+.lg-shield{width:54px;height:54px;border-radius:50%;background:#d9f2ef;color:#0f9e8b;display:grid;place-items:center;margin:0 auto 14px}
+.lg-card h3{text-align:center;font-size:22px;font-weight:600;color:#14264b}
+.lg-sub{text-align:center;font-size:12.5px;color:#8b93a5;margin:6px 0 24px}
+.lg-card label{font-size:13px;font-weight:500;color:#1e2a44;margin-bottom:8px}
+.lg-field{display:flex;align-items:center;gap:10px;height:48px;padding:0 14px;border:1px solid #e3e7ee;border-radius:10px;background:#fafbfc;color:#6b7488;margin-bottom:20px;transition:border-color .2s,box-shadow .2s}
+.lg-field:focus-within{border-color:#14a58f;box-shadow:0 0 0 3px rgba(20,165,143,.12);background:#fff}
+.lg-field input{flex:1;border:0;outline:0;background:transparent;font:inherit;font-size:13px;color:#1e2a44;min-width:0}
+.lg-field input::placeholder{color:#a3aabb}
+.lg-eye{display:grid;place-items:center;color:#6b7488}
+
+.lg-row{display:flex;justify-content:space-between;align-items:center;margin:2px 0 22px}
+.lg-chk{display:flex;align-items:center;gap:8px;margin:0!important;font-size:12.5px!important;font-weight:400!important;color:#4a5570!important;cursor:pointer}
+.lg-chk input{width:16px;height:16px;accent-color:#14a58f}
+.lg-row a{font-size:12.5px;color:#2f7de1;text-decoration:none}
+.lg-row a:hover{text-decoration:underline}
+
+.lg-btn{display:flex;align-items:center;justify-content:center;gap:8px;height:50px;border-radius:10px;color:#fff;font-size:15px;font-weight:500;background:linear-gradient(90deg,#14a58f 0%,#4b83ea 100%);box-shadow:0 6px 16px rgba(52,130,200,.25);transition:transform .15s,box-shadow .15s}
+.lg-btn:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(52,130,200,.32)}
+.lg-btn:active{transform:scale(.98)}
+
+.lg-or{display:flex;align-items:center;gap:12px;margin:22px 0 16px;color:#8b93a5;font-size:12px}
+.lg-or::before,.lg-or::after{content:"";flex:1;height:1px;background:#e3e7ee}
+
+.lg-google{display:flex;align-items:center;justify-content:center;gap:10px;height:48px;border:1px solid #e3e7ee;border-radius:10px;background:#fff;font-size:13.5px;font-weight:500;color:#1e2a44;transition:background .15s}
+.lg-google:hover{background:#f7f8fa}
+
+.lg-help{text-align:center;font-size:12px;color:#8b93a5;margin-top:26px}
+.lg-help a{color:#2f7de1;text-decoration:none}
+
+/* ---------- no scroll: same look & size, only vertical spacing is tightened (desktop) ---------- */
+@media(min-width:901px){
+  .lg-right{padding:12px 40px}
+  .lg-card{padding:26px 38px 20px}
+  .lg-shield{margin-bottom:10px}
+  .lg-sub{margin:6px 0 16px}
+  .lg-field{margin-bottom:14px}
+  .lg-row{margin:0 0 16px}
+  .lg-or{margin:16px 0 12px}
+  .lg-help{margin-top:14px}
+}
+/* tall screens: roomy spacing like the design */
+@media(min-width:901px) and (min-height:780px){
+  .lg-right{padding:40px}
+  .lg-card{padding:36px 38px 30px}
+  .lg-shield{margin-bottom:14px}
+  .lg-sub{margin:6px 0 24px}
+  .lg-field{margin-bottom:20px}
+  .lg-row{margin:2px 0 22px}
+  .lg-or{margin:22px 0 16px}
+  .lg-help{margin-top:26px}
+}
+/* very short screens only: slightly smaller fields */
+@media(min-width:901px) and (max-height:600px){
+  .lg-field{height:42px;margin-bottom:10px}
+  .lg-btn{height:44px}
+  .lg-google{height:42px}
+  .lg-shield{width:44px;height:44px}
+  .lg-copy{display:none}
+}
+
+/* ---------- mobile ---------- */
+@media(max-width:900px){
+  .lg{grid-template-columns:1fr;height:auto;overflow:auto}
+  .lg-left{display:none}
+  .lg-right{min-height:100vh;padding:20px}
+  .lg-card{padding:28px 22px}
+}

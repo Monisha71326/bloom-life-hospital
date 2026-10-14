@@ -1,0 +1,474 @@
+/* =====================================================
+   PATIENT RECORDS PAGE  (all classes prefixed  pr-)
+   Import: import "../css/patientRecords.css";
+   ===================================================== */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=DM+Mono:wght@400;500&display=swap");
+
+.pr-page{
+  --teal:#2f8577; --mauve:#8a4c6d; --sand:#efe3cf; --amber:#c58a2b;
+  --line:#e7e9ec; --txt:#1c2330; --soft:#6b7280;
+  padding:6px 4px 28px; color:var(--txt);
+}
+.pr-page *{box-sizing:border-box}
+.pr-mono{font-family:"DM Mono",ui-monospace,monospace;font-style:normal}
+.pr-page h1,.pr-page h2,.pr-page h3,.pr-page h4{margin:0}
+:where(.pr-page) button{cursor:pointer;border:0;background:none;font:inherit}
+
+.pr-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--soft);margin:0 0 10px;transition:color .2s,transform .2s}
+.pr-back:hover{color:var(--teal);transform:translateX(-3px)}
+
+.pr-card{background:#fbfbf9;border:1px solid var(--line);border-radius:24px;margin-bottom:22px}
+.pr-card header{display:flex;justify-content:space-between;align-items:center}
+.pr-card h3{font-size:14px;font-weight:600;letter-spacing:.14em;color:#4b5563}
+.pr-none{margin:18px 0 4px;text-align:center;font-size:13px;color:#9aa0a8}
+
+/* ---------------- header card ---------------- */
+.pr-head{display:flex;align-items:center;gap:22px;padding:37px 22px;flex-wrap:wrap}
+.pr-avatar{flex:none;width:60px;height:60px;border-radius:15px;display:grid;place-items:center;
+  font-family:"Fraunces",serif;font-size:24px;color:#374151;
+  background:linear-gradient(135deg,#f3e9ee,#e3efec);border:1px solid var(--line)}
+.pr-who{flex:1;min-width:260px}
+.pr-who h1{font-family:"Fraunces",serif;font-size:29px;font-weight:700;line-height:1.1;margin-bottom:8px}
+.pr-meta{display:flex;flex-wrap:wrap;gap:6px 16px;margin:0;font-size:14px;color:var(--soft)}
+.pr-meta b{color:var(--txt);font-weight:600}
+.pr-meta i{font-size:13px}
+
+.pr-gpal{display:flex;gap:26px;padding:0 22px;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.pr-gpal div{text-align:center}
+.pr-gpal strong{display:block;font-family:"Fraunces",serif;font-size:22px;font-weight:600;color:var(--teal);line-height:1.2}
+.pr-gpal small{font-size:11px;letter-spacing:.12em;color:#9aa0a8}
+
+.pr-tags{display:flex;flex-direction:column;gap:8px;align-items:center}
+.pr-tag{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:20px;font-size:13px;font-weight:600;white-space:nowrap}
+.pr-tag i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.pr-tag.rose{background:#f6dfe5;color:#8e3d58}
+.pr-tag.amber{background:#f8ecd2;color:#a9741a}
+.pr-tag.red{background:#f8dcdc;color:#b83a3a}
+
+/* ---------------- antenatal timeline ---------------- */
+.pr-tl{padding:20px 30px 7px}
+.pr-tl header{height:22px}
+.pr-tl header h3{color:#5b6472}
+.pr-lmp{margin:0;font-family:"Fraunces",serif;font-size:19px;color:#2b2f3a;white-space:nowrap}
+.pr-lmp .pr-mono{font-size:17px}
+.pr-lmp em{font-style:normal;color:var(--mauve);font-weight:600}
+.pr-lmp em.pr-mono{font-weight:500}
+
+.pr-scroll{margin-top:6px}
+.pr-track{position:relative;height:135px}
+
+.pr-bar,.pr-fill{position:absolute;top:45px;height:12px}
+.pr-bar{left:0;right:0;background:var(--sand);border-radius:8px}
+.pr-fill{left:0;border-radius:8px 0 0 8px;background:linear-gradient(90deg,#3b8c80 0%,#6a8a86 38%,#8f5a77 75%,#9c4f70 100%)}
+
+.pr-today{position:absolute;top:14px;transform:translateX(-50%);background:var(--mauve);color:#fff;
+  font-size:11px;font-weight:600;letter-spacing:.06em;padding:4px 10px;border-radius:5px;white-space:nowrap;z-index:4}
+.pr-today-line{position:absolute;top:35px;height:53px;width:2px;margin-left:-1px;background:var(--mauve);z-index:3}
+
+.pr-tri{position:absolute;top:65px;font-size:12.5px;color:var(--soft);white-space:nowrap}
+.pr-chip{position:absolute;top:71px;transform:translateX(-50%);font-size:11px;font-weight:600;padding:3px 8px;border-radius:5px;
+  background:#d7ece6;color:var(--teal);z-index:4}
+.pr-chip.now{background:#cfe9e2}
+.pr-chip.future{background:#f5e6c8;color:var(--amber)}
+.pr-tick{position:absolute;top:99px;transform:translateX(-50%);font-size:11.5px;color:#a9aeb5;font-family:"DM Mono",monospace}
+
+/* milestone = pin + dot + dashed line + label */
+.pr-ms{position:absolute;top:0;width:0}
+.pr-ms.teal{--tone:#2f8577;--tint:#cfe5df;--ring:#1f6b5f}
+.pr-ms.mauve{--tone:#8a4c6d;--tint:#ead9e2;--ring:#6f3556}
+.pr-ms.amber{--tone:#c58a2b;--tint:#f1e1bd;--ring:#c58a2b}
+.pr-pin{position:absolute;top:0;left:-15px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;
+  background:#fff;border:1px solid var(--tint);color:var(--tone);box-shadow:0 2px 6px rgba(20,38,75,.07)}
+.pr-pin::after{content:"";position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:var(--tint);border-bottom:0}
+.pr-dot{position:absolute;top:45px;left:-6px;width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid var(--ring);z-index:5}
+.pr-dash{position:absolute;top:58px;left:0;height:42px;border-left:1px dashed #cfd3d8}
+.pr-lbl{position:absolute;top:100px;left:-55px;width:110px;text-align:center;line-height:1.3;color:var(--tone);font-size:11px}
+.pr-lbl b{display:block;font-size:11px;font-weight:700;color:#1f2937}
+.pr-ms.future .pr-lbl{color:#4b4b4b}
+
+/* ---------------- 3 columns ---------------- */
+.pr-cols{display:grid;grid-template-columns:minmax(0,300fr) minmax(0,728fr) minmax(0,300fr);gap:22px 20px;width:98.56%;align-items:stretch}
+.pr-col{display:flex;flex-direction:column;gap:22px;min-width:0}
+.pr-col .pr-card{margin:0;padding:16px 20px 18px}
+.pr-col .grow{flex:1}
+
+/* vitals */
+.pr-vitals header .pr-mono{font-size:12px;color:#9aa0a8}
+.pr-vgrid{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:14px;margin-top:48px;overflow:hidden;background:#fff}
+.pr-vbox{padding:12px 14px;border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pr-vbox:nth-child(2n){border-right:0}
+.pr-vbox:nth-last-child(-n+2){border-bottom:0}
+.pr-vbox small{display:block;font-size:13px;color:var(--soft);margin-bottom:6px}
+.pr-vbox strong{font-size:18px;font-weight:600}
+.pr-vbox.big strong{font-size:26px}
+.pr-vbox strong.warn{color:#e8862a}
+.pr-vbox strong span{font-size:13px;font-weight:400;color:#9aa0a8}
+.pr-vbox em{display:block;font-style:normal;font-size:12px;color:#9aa0a8;margin-top:2px}
+
+/* list cards: lab tests / prescription / history */
+.pr-list h3{margin-bottom:12px}
+.pr-item{padding:10px 0 11px;border-bottom:1px dashed #dfe3e7}
+.pr-item:last-of-type{border-bottom:0}
+.pr-item b{display:flex;align-items:center;gap:8px;font-size:15.5px;font-weight:600;color:#111827}
+.pr-item p{margin:5px 0 0 23px;font-size:12.5px;line-height:1.5;color:var(--soft)}
+.ti{flex:none}
+.ti.orange{color:#e8862a}.ti.red{color:#e03a3a}.ti.lime{color:#9bb520}.ti.none{color:#e5d9a8}
+.pr-item.hist b{justify-content:space-between;font-size:14px;font-weight:600;letter-spacing:.02em}
+.pr-item.hist b span{font-size:12px;font-weight:400;color:#9aa0a8}
+.pr-item.hist p{margin-left:0}
+.pr-note{margin:10px 0 0;font-size:13px;line-height:1.6;font-weight:500;color:#1f2937}
+
+/* consultation form */
+.pr-form{min-height:201px}
+.pr-form + .pr-vtl{margin-top:-10px}
+.pr-badge{background:#6fb1da;color:#fff;font-size:12px;font-weight:500;padding:5px 12px;border-radius:14px}
+.pr-info{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:57px 0 0}
+.pr-info>div{display:flex;align-items:center;gap:10px;min-width:0}
+.pr-info .ic{flex:none;width:50px;height:50px;border-radius:50%;display:grid;place-items:center}
+.ic.blue{background:#e4eefc;color:#3b7be0}
+.ic.green{background:#e0f4ea;color:#1fa463}
+.ic.purple{background:#ece6fb;color:#7a4ee0}
+.ic.orange{background:#fdeedd;color:#e8862a}
+.pr-info p{margin:0;min-width:0}
+.pr-info small{display:block;font-size:13.5px;color:var(--soft)}
+.pr-info b{display:block;font-size:16px;font-weight:600;margin:3px 0}
+.pr-info em{display:block;font-style:normal;font-size:12px;color:#9aa0a8}
+
+/* consultation type tile -> click panna modal open aagum */
+.pr-info>div.clickable{cursor:pointer;padding:6px 8px;margin:-6px -8px;border-radius:14px;
+  transition:transform .3s,background .25s,box-shadow .25s}
+.pr-info>div.clickable:hover{background:#fdf3e7;box-shadow:0 6px 16px rgba(232,134,42,.15)}
+.pr-info>div.clickable:active{transform:scale(.97)}
+.pr-info>div.clickable:focus-visible{outline:2px solid #e8862a;outline-offset:2px}
+
+
+/* ---------------- consultation timeline ---------------- */
+.pr-col .pr-vtl{padding:16px 24px 14px}
+.pr-vsub{display:block;margin:3px 0 12px;font-size:12px;color:var(--soft)}
+.pr-vcards,.pr-vnodes{display:grid;grid-template-columns:repeat(6,1fr)}
+.pr-vcol{display:flex;justify-content:center}
+.pr-vcard{--c:#12a898;position:relative;width:92%;min-height:0;padding:9px 6px 10px;border-radius:10px;background:#fff;border:1px solid var(--c);
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px}
+.pr-vcard.teal{--c:#12a898}.pr-vcard.pink{--c:#e8326e}.pr-vcard.purple{--c:#7a4ee0}
+.pr-vcard.orange{--c:#f0951a}.pr-vcard.blue{--c:#2d6cf0}.pr-vcard.green{--c:#3aa655}
+.pr-vcard .d{font-size:10px;color:var(--c);font-weight:600}
+.pr-vcard b{font-size:12px;font-weight:700;line-height:1.25;color:#111827}
+.pr-vcard em{font-style:normal;font-size:10px;color:var(--soft);line-height:1.3}
+.pr-vcard .tg{margin-top:4px;font-style:normal;font-size:9px;font-weight:600;
+  padding:2px 9px;border-radius:6px;background:color-mix(in srgb,var(--c) 14%,#fff);color:var(--c);white-space:nowrap}
+
+.pr-vnodes{position:relative;margin-top:10px}
+.pr-vnodes::before{content:"";position:absolute;left:8%;right:8%;top:17px;height:1px;background:#d9dde2}
+.pr-vnode{--c:#12a898;position:relative;display:flex;justify-content:center}
+.pr-vnode.teal{--c:#12a898}.pr-vnode.pink{--c:#e8326e}.pr-vnode.purple{--c:#7a4ee0}
+.pr-vnode.orange{--c:#f0951a}.pr-vnode.blue{--c:#2d6cf0}.pr-vnode.green{--c:#3aa655}
+.pr-vnode .circle{position:relative;z-index:1;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:var(--c);color:#fff;box-shadow:0 0 0 4px #fff}
+.pr-vnode .gap{position:absolute;right:0;top:14px;width:6px;height:6px;border-radius:50%;background:var(--c);transform:translateX(50%);z-index:2}
+
+.pr-vstats{display:flex;gap:8px;margin-top:22px;padding:6px 8px;border:1px solid var(--line);border-radius:12px;background:#f8faf9}
+.pr-vstats .st{flex:1;display:flex;align-items:center;gap:7px;min-width:0;padding:4px 6px}
+.pr-vstats .st.hl{flex:1.5;background:#e1f2e6;border-radius:8px}
+.pr-vstats .sic{flex:none;width:26px;height:26px;border-radius:7px;display:grid;place-items:center}
+.sic.teal{background:#d3efe9;color:#12a898}.sic.pink{background:#fbdbe6;color:#e8326e}.sic.purple{background:#e6defb;color:#7a4ee0}
+.sic.orange{background:#fde7cc;color:#f0951a}.sic.green{background:#c9ebd2;color:#3aa655}
+.pr-vstats p{margin:0;min-width:0}
+.pr-vstats strong{display:block;font-size:15px;font-weight:700;color:#111827;line-height:1.1}
+.pr-vstats small{display:block;font-size:10px;color:var(--soft);line-height:1.3}
+
+/* ---------------- clinical journey ---------------- */
+.pr-col .pr-journey{background:#fff;border-color:#f0f1f3;padding:22px 20px 18px}
+.pr-journey h2{display:flex;align-items:center;gap:9px;font-size:21px;font-weight:600;color:#0f1b3d}
+.pr-journey h2 svg{color:#12a898}
+.pr-jsub{display:block;margin:4px 0 20px 27px;font-size:11.5px;color:var(--soft)}
+
+.pr-jcards,.pr-jnodes{display:grid;grid-template-columns:repeat(4,1fr)}
+.pr-jcol{display:flex;justify-content:center}
+.pr-jcard{position:relative;width:86%;min-height:125px;padding:10px 10px 34px;border-radius:10px;background:#fff;border:1px solid;display:flex;flex-direction:column;gap:3px}
+.pr-jcard .tag{font-size:9px;font-weight:600;letter-spacing:.05em}
+.pr-jcard b{font-size:13px;font-weight:600;line-height:1.35;color:#111827}
+.pr-jcard em{font-style:normal;font-size:11px;color:var(--soft)}
+.pr-jcard .bd{position:absolute;right:8px;bottom:8px;font-style:normal;font-size:10px;padding:2px 14px;border-radius:5px;border:1px solid}
+.pr-jcard.teal{border-color:#8fdccf}.pr-jcard.teal .tag{color:#12a898}.pr-jcard.teal .bd{background:#e0f6f2;color:#12a898;border-color:#bdeae2}
+.pr-jcard.pink{border-color:#f5a9c3}.pr-jcard.pink .tag{color:#e83e7b}.pr-jcard.pink .bd{background:#fde3ec;color:#e83e7b;border-color:#f8c4d6}
+.pr-jcard.cyan{border-color:#8ed3e2}.pr-jcard.cyan .tag{color:#1aa6c0}.pr-jcard.cyan .bd{background:#e0f4f8;color:#1aa6c0;border-color:#bfe5ee}
+
+.pr-jnodes{position:relative;margin-top:20px}
+.pr-jnodes::before{content:"";position:absolute;left:0;right:0;top:20px;height:1px;background:#d9dde2}
+.pr-jnodes::after{content:"";position:absolute;right:0;top:16px;border:4px solid transparent;border-left:7px solid #b8bec6;border-right:0}
+.pr-jnode{position:relative;display:flex;flex-direction:column;align-items:center;--c:#12a898}
+.pr-jnode.pink{--c:#e83e7b}.pr-jnode.cyan{--c:#1aa6c0}
+.pr-jnode .circle{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--c);color:#fff;z-index:1;box-shadow:0 0 0 4px #fff}
+.pr-jnode .pt{width:5px;height:5px;border-radius:50%;background:var(--c);margin:7px 0 5px}
+.pr-jnode strong{font-size:21px;font-weight:700;color:var(--c);line-height:1.1}
+.pr-jnode small{font-size:11.5px;color:var(--soft);margin-top:4px}
+
+/* next appointment + messenger */
+.pr-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.pr-pair .pr-card{display:flex;flex-direction:column}
+.pr-nbox,.pr-mbox{flex:1;margin-top:14px;border-radius:14px;background:#f0f3f2;padding:20px 16px}
+.pr-nbox{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px}
+.pr-nbox strong{font-family:"Fraunces",serif;font-size:26px;font-weight:600;color:#1c2330}
+.pr-nbox p{margin:0;font-size:14px;color:var(--soft)}
+.pr-nbox span{display:inline-flex;align-items:center;gap:7px;margin-top:4px;padding:7px 14px;border-radius:20px;background:#d8eee6;color:#1f7a64;font-size:13px;font-weight:600}
+.pr-nbox span i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.pr-mbox{display:flex;flex-direction:column;gap:12px;background:#f1f3f4;color:#6b7280}
+.pr-msgs{display:flex;flex-direction:column;align-items:flex-end;gap:6px;max-height:90px;overflow-y:auto}
+.pr-msgs span{background:#d8eee6;color:#1f5e4e;font-size:13px;padding:6px 12px;border-radius:12px 12px 2px 12px;max-width:90%}
+.pr-minput{display:flex;align-items:center;gap:6px;height:36px;border-radius:8px;background:#e3e5e8;padding:0 10px;margin-top:auto}
+.pr-minput input{flex:1;min-width:0;border:0;outline:0;background:none;font:inherit;font-size:13px;color:var(--txt)}
+.pr-minput button{color:#6b7280;display:grid;place-items:center;transition:color .2s}
+.pr-minput button:hover{color:var(--teal)}
+
+/* alerts */
+.pr-alerts{padding:16px 17px 12px!important}
+.pr-alerts header + .pr-alert{margin-top:10px}
+.pr-add{display:inline-flex;align-items:center;gap:5px;background:#4aa3d8;color:#0f2a3d;font-size:12.5px;font-weight:500;padding:7px 14px;border-radius:14px;transition:transform .2s,box-shadow .2s}
+.pr-add:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(74,163,216,.35)}
+.pr-newalert{display:grid;gap:6px;margin-top:14px}
+.pr-newalert input{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;font-size:13px;outline:0;background:#fff}
+.pr-newalert input:focus{border-color:#4aa3d8}
+.pr-newalert button{justify-self:start;background:var(--teal);color:#fff;font-size:12px;padding:6px 14px;border-radius:10px}
+.pr-alert{position:relative;margin-top:6px;padding:12px 12px 12px 12px;border-radius:14px;border:1px solid transparent}
+.pr-alert b{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;margin-bottom:6px;color:#111}
+.pr-alert p{margin:0 0 0 22px;font-size:12.5px;line-height:1.55;color:#6b7280}
+.pr-alert.pr-lv-high{background:#fbe3e1;border-color:#f3c9c6}
+.pr-alert.pr-lv-mid{background:#fbf0d6;border-color:#f1dfae}
+.pr-alert.pr-lv-info{background:#dcebe9;border-color:#c6dcd9}
+.pr-rm{position:absolute;top:10px;right:10px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;
+  color:#9aa0a8;opacity:0;transition:opacity .2s,background .2s}
+.pr-alert:hover .pr-rm{opacity:1}
+.pr-rm:hover{background:rgba(0,0,0,.08)}
+
+/* radiology */
+.pr-rad h3{margin-bottom:16px}
+.pr-rad h4{font-size:16px;font-weight:600;color:#111827;margin:0 0 6px}
+.pr-rad>p{margin:0 0 20px;font-size:12.5px;line-height:1.55;color:var(--soft)}
+.pr-scans{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.pr-scans figure{margin:0;text-align:center}
+.pr-scans img,.pr-scans .scan{display:block;width:100%;max-width:92px;height:auto;aspect-ratio:1/1;margin:0 auto;border-radius:14px;object-fit:cover;overflow:hidden}
+.pr-scans figcaption{margin-top:8px;font-size:12px;color:var(--soft)}
+
+/* ---------------- responsive ---------------- */
+@media(max-width:1000px){
+  .pr-scroll{overflow-x:auto;overflow-y:hidden}
+  .pr-track{min-width:900px;margin-right:50px}
+}
+
+@media(max-width:900px){
+  .pr-cols{grid-template-columns:1fr;width:100%}
+  .pr-info{grid-template-columns:1fr 1fr}
+  .pr-pair{grid-template-columns:1fr}
+  .pr-vcards,.pr-vnodes{grid-template-columns:repeat(3,1fr);row-gap:12px}
+  .pr-vnodes{display:none}
+  .pr-jcards,.pr-jnodes{grid-template-columns:repeat(2,1fr);row-gap:14px}
+  .pr-jnodes::before,.pr-jnodes::after{display:none}
+  .pr-gpal{border:0;padding:0}
+}
+
+
+/* =====================================================
+   ANIMATIONS  (pure CSS, JSX maatha thevai illa)
+   ===================================================== */
+
+/* ---------- keyframes ---------- */
+@keyframes prUp{from{opacity:0;transform:translateY(26px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes prFade{from{opacity:0}to{opacity:1}}
+@keyframes prPop{0%{opacity:0;transform:scale(.3)}70%{opacity:1;transform:scale(1.15)}100%{opacity:1;transform:scale(1)}}
+@keyframes prSlideR{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+@keyframes prSlideL{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
+@keyframes prGrowX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes prGrowY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes prPinDrop{0%{opacity:0;transform:translateY(-18px) scale(.4)}65%{opacity:1;transform:translateY(3px) scale(1.1)}100%{opacity:1;transform:none}}
+@keyframes prTodayIn{0%{opacity:0;transform:translateX(-50%) translateY(-16px) scale(.6)}70%{opacity:1;transform:translateX(-50%) translateY(2px) scale(1.08)}100%{opacity:1;transform:translateX(-50%)}}
+@keyframes prTodayBob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-3px)}}
+@keyframes prChipIn{from{opacity:0;transform:translateX(-50%) translateY(8px) scale(.7)}to{opacity:1;transform:translateX(-50%)}}
+@keyframes prRing{0%{box-shadow:0 0 0 0 rgba(138,76,109,.55)}100%{box-shadow:0 0 0 12px rgba(138,76,109,0)}}
+@keyframes prShine{0%{left:-40%}60%,100%{left:130%}}
+@keyframes prBeat{0%,100%{transform:scale(1)}15%{transform:scale(1.28)}30%{transform:scale(1)}45%{transform:scale(1.2)}60%{transform:scale(1)}}
+@keyframes prFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes prDot{0%{box-shadow:0 0 0 0 currentColor;opacity:1}70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes prAlertGlow{0%,100%{box-shadow:0 0 0 0 rgba(224,58,58,.35)}50%{box-shadow:0 0 0 6px rgba(224,58,58,0)}}
+@keyframes prWarn{0%,100%{text-shadow:0 0 0 rgba(232,134,42,0)}50%{text-shadow:0 0 12px rgba(232,134,42,.55)}}
+@keyframes prWiggle{0%,88%,100%{transform:rotate(0)}91%{transform:rotate(-12deg)}94%{transform:rotate(10deg)}97%{transform:rotate(-6deg)}}
+@keyframes prScanSweep{0%{transform:translateY(-110%)}100%{transform:translateY(110%)}}
+
+/* ---------- page load: cards rise in one by one ---------- */
+.pr-back{animation:prSlideL .5s cubic-bezier(.22,1,.36,1) backwards}
+.pr-head{animation:prUp .7s cubic-bezier(.22,1,.36,1) .05s backwards}
+.pr-tl{animation:prUp .7s cubic-bezier(.22,1,.36,1) .15s backwards}
+
+.pr-cols .pr-card{animation:prUp .7s cubic-bezier(.22,1,.36,1) backwards}
+.pr-cols>.pr-col:nth-child(1)>.pr-card:nth-child(1){animation-delay:.30s}
+.pr-cols>.pr-col:nth-child(1)>.pr-card:nth-child(2){animation-delay:.40s}
+.pr-cols>.pr-col:nth-child(1)>.pr-card:nth-child(3){animation-delay:.50s}
+.pr-cols>.pr-col:nth-child(2)>.pr-card:nth-child(1){animation-delay:.35s}
+.pr-cols>.pr-col:nth-child(2)>.pr-card:nth-child(2){animation-delay:.48s}
+.pr-cols>.pr-col:nth-child(2)>.pr-card:nth-child(3){animation-delay:.60s}
+.pr-cols>.pr-col:nth-child(3)>.pr-card:nth-child(1){animation-delay:.32s}
+.pr-cols>.pr-col:nth-child(3)>.pr-card:nth-child(2){animation-delay:.44s}
+.pr-cols>.pr-col:nth-child(3)>.pr-card:nth-child(3){animation-delay:.56s}
+.pr-pair .pr-card:nth-child(1){animation-delay:.72s}
+.pr-pair .pr-card:nth-child(2){animation-delay:.82s}
+
+/* ---------- card hover: soft lift ---------- */
+.pr-card{transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s,border-color .35s}
+.pr-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(20,38,75,.09);border-color:#dfe6e4}
+
+/* ---------- header ---------- */
+.pr-avatar{transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+.pr-avatar:hover{transform:rotate(-8deg) scale(1.1)}
+.pr-who h1{animation:prSlideL .6s cubic-bezier(.22,1,.36,1) .25s backwards}
+.pr-meta span{animation:prUp .5s cubic-bezier(.22,1,.36,1) backwards}
+.pr-meta span:nth-child(1){animation-delay:.35s}.pr-meta span:nth-child(2){animation-delay:.42s}
+.pr-meta span:nth-child(3){animation-delay:.49s}.pr-meta span:nth-child(4){animation-delay:.56s}
+.pr-gpal div{animation:prPop .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.pr-gpal div:nth-child(1){animation-delay:.45s}.pr-gpal div:nth-child(2){animation-delay:.53s}
+.pr-gpal div:nth-child(3){animation-delay:.61s}.pr-gpal div:nth-child(4){animation-delay:.69s}
+.pr-tag{animation:prSlideR .5s cubic-bezier(.22,1,.36,1) backwards;transition:transform .25s,box-shadow .25s}
+.pr-tag:nth-child(1){animation-delay:.5s}.pr-tag:nth-child(2){animation-delay:.6s}.pr-tag:nth-child(3){animation-delay:.7s}
+.pr-tag:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 6px 14px rgba(0,0,0,.08)}
+.pr-tag.rose i,.pr-tag.red i{animation:prDot 1.8s ease-out infinite}
+.pr-tag.rose i{color:#8e3d58}.pr-tag.red i{color:#b83a3a}
+
+/* ---------- antenatal timeline ---------- */
+.pr-bar{transform-origin:left;animation:prGrowX .9s cubic-bezier(.22,1,.36,1) .3s backwards}
+.pr-fill{transform-origin:left;overflow:hidden;animation:prGrowX 1.6s cubic-bezier(.22,1,.36,1) .55s backwards}
+.pr-fill::after{content:"";position:absolute;top:0;left:-40%;width:35%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);animation:prShine 3.2s ease-in-out 2.2s infinite}
+
+.pr-today{animation:prTodayIn .7s cubic-bezier(.34,1.56,.64,1) 1.9s backwards,prTodayBob 2.6s ease-in-out 2.6s infinite}
+.pr-today-line{transform-origin:top;animation:prGrowY .5s ease-out 1.9s backwards}
+.pr-today-line::after{content:"";position:absolute;bottom:-5px;left:50%;width:10px;height:10px;margin-left:-5px;border-radius:50%;
+  background:var(--mauve);animation:prRing 1.8s ease-out 2.4s infinite}
+
+.pr-tri{animation:prFade .6s ease 1s backwards}
+.pr-chip{animation:prChipIn .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.pr-chip:nth-of-type(6){animation-delay:1.1s}
+.pr-chip:nth-of-type(7){animation-delay:1.2s}
+.pr-chip:nth-of-type(8){animation-delay:1.3s}
+.pr-chip:nth-of-type(9){animation-delay:1.4s}
+.pr-tick{animation:prFade .5s ease 1.2s backwards}
+
+/* milestones drop in from left to right (div 1,2 = bar + fill) */
+.pr-ms:nth-of-type(3){--d:.8s}.pr-ms:nth-of-type(4){--d:.95s}.pr-ms:nth-of-type(5){--d:1.1s}.pr-ms:nth-of-type(6){--d:1.25s}
+.pr-ms:nth-of-type(7){--d:1.4s}.pr-ms:nth-of-type(8){--d:1.55s}.pr-ms:nth-of-type(9){--d:1.7s}.pr-ms:nth-of-type(10){--d:1.85s}
+.pr-pin{animation:prPinDrop .6s cubic-bezier(.34,1.56,.64,1) var(--d,1s) backwards;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+.pr-dot{animation:prPop .45s cubic-bezier(.34,1.56,.64,1) var(--d,1s) backwards}
+.pr-dash{transform-origin:top;animation:prGrowY .4s ease-out var(--d,1s) backwards}
+.pr-lbl{animation:prFade .6s ease var(--d,1s) backwards;transition:transform .3s}
+.pr-ms:hover .pr-pin{transform:translateY(-4px) scale(1.18);box-shadow:0 8px 16px rgba(20,38,75,.18)}
+.pr-ms:hover .pr-lbl{transform:translateY(2px)}
+.pr-ms.future .pr-pin{animation:prPinDrop .6s cubic-bezier(.34,1.56,.64,1) var(--d,1s) backwards,prFloat 3s ease-in-out 3s infinite}
+
+/* ---------- vitals ---------- */
+.pr-vgrid{animation:prFade .5s ease .55s backwards}
+.pr-vbox{animation:prPop .5s cubic-bezier(.34,1.56,.64,1) backwards;transition:background .25s}
+.pr-vbox:nth-child(1){animation-delay:.6s}.pr-vbox:nth-child(2){animation-delay:.68s}.pr-vbox:nth-child(3){animation-delay:.76s}
+.pr-vbox:nth-child(4){animation-delay:.84s}.pr-vbox:nth-child(5){animation-delay:.92s}.pr-vbox:nth-child(6){animation-delay:1s}
+.pr-vbox:hover{background:#f3f8f7}
+.pr-vbox strong.warn{animation:prWarn 2.2s ease-in-out 1.4s infinite}
+
+/* ---------- list items (lab / prescription / visit summary) ---------- */
+.pr-item{animation:prSlideR .5s cubic-bezier(.22,1,.36,1) backwards;transition:background .25s,padding .25s}
+.pr-item:nth-of-type(1){animation-delay:.65s}.pr-item:nth-of-type(2){animation-delay:.75s}.pr-item:nth-of-type(3){animation-delay:.85s}
+.pr-item:hover{background:#f4f8f7;padding-left:8px;padding-right:8px;border-radius:10px}
+.pr-item b svg{transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.pr-item:hover b svg{transform:scale(1.35) rotate(-10deg)}
+.pr-note{animation:prFade .6s ease 1s backwards}
+
+/* ---------- consultation form ---------- */
+.pr-badge{position:relative;overflow:hidden}
+.pr-badge::after{content:"";position:absolute;top:0;left:-40%;width:35%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);animation:prShine 3s ease-in-out 1.5s infinite}
+.pr-info>div{animation:prUp .5s cubic-bezier(.22,1,.36,1) backwards;transition:transform .3s}
+.pr-info>div:nth-child(1){animation-delay:.55s}.pr-info>div:nth-child(2){animation-delay:.65s}
+.pr-info>div:nth-child(3){animation-delay:.75s}.pr-info>div:nth-child(4){animation-delay:.85s}
+.pr-info>div:hover{transform:translateY(-3px)}
+.pr-info .ic{transition:transform .35s cubic-bezier(.34,1.56,.64,1)}
+.pr-info>div:hover .ic{transform:scale(1.15) rotate(-8deg)}
+.pr-info>div:nth-child(1) .ic svg{animation:prFloat 3s ease-in-out infinite}
+.pr-info>div:nth-child(2) .ic svg{animation:prFloat 3s ease-in-out .4s infinite}
+.pr-info>div:nth-child(3) .ic svg{animation:prFloat 3s ease-in-out .8s infinite}
+.pr-info>div:nth-child(4) .ic svg{animation:prFloat 3s ease-in-out 1.2s infinite}
+
+/* ---------- consultation timeline ---------- */
+.pr-vcol{animation:prUp .55s cubic-bezier(.22,1,.36,1) backwards}
+.pr-vcol:nth-child(1){animation-delay:.8s}.pr-vcol:nth-child(2){animation-delay:.9s}.pr-vcol:nth-child(3){animation-delay:1s}
+.pr-vcol:nth-child(4){animation-delay:1.1s}.pr-vcol:nth-child(5){animation-delay:1.2s}.pr-vcol:nth-child(6){animation-delay:1.3s}
+.pr-vcard{transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,background .3s}
+.pr-vcard:hover{transform:translateY(-6px) scale(1.06);box-shadow:0 10px 20px color-mix(in srgb,var(--c) 28%,transparent);background:color-mix(in srgb,var(--c) 5%,#fff)}
+.pr-vnodes::before{transform-origin:left;animation:prGrowX 1.1s ease-out 1s backwards}
+.pr-vnode{animation:prPop .5s cubic-bezier(.34,1.56,.64,1) backwards}
+.pr-vnode:nth-child(1){animation-delay:1.05s}.pr-vnode:nth-child(2){animation-delay:1.15s}.pr-vnode:nth-child(3){animation-delay:1.25s}
+.pr-vnode:nth-child(4){animation-delay:1.35s}.pr-vnode:nth-child(5){animation-delay:1.45s}.pr-vnode:nth-child(6){animation-delay:1.55s}
+.pr-vnode .circle{transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+.pr-vnode:hover .circle{transform:scale(1.2) rotate(-8deg);box-shadow:0 0 0 4px #fff,0 0 0 8px color-mix(in srgb,var(--c) 25%,transparent)}
+.pr-vstats{animation:prUp .6s cubic-bezier(.22,1,.36,1) 1.5s backwards}
+.pr-vstats .st{transition:transform .25s,background .25s;border-radius:8px}
+.pr-vstats .st:hover{transform:translateY(-2px);background:#eef5f2}
+.pr-vstats .st.hl:hover{background:#d4ecdb}
+.pr-vstats .sic{transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.pr-vstats .st:hover .sic{transform:rotate(-10deg) scale(1.15)}
+.pr-vstats .st.hl .sic svg{animation:prBeat 1.6s ease-in-out infinite}
+
+/* ---------- clinical journey ---------- */
+.pr-journey h2 svg{animation:prBeat 1.8s ease-in-out infinite}
+.pr-jcol{animation:prUp .55s cubic-bezier(.22,1,.36,1) backwards}
+.pr-jcol:nth-child(1){animation-delay:.95s}.pr-jcol:nth-child(2){animation-delay:1.05s}
+.pr-jcol:nth-child(3){animation-delay:1.15s}.pr-jcol:nth-child(4){animation-delay:1.25s}
+.pr-jcard{transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+.pr-jcard:hover{transform:translateY(-6px);box-shadow:0 12px 22px rgba(20,38,75,.12)}
+.pr-jnodes::before{transform-origin:left;animation:prGrowX 1.2s ease-out 1.1s backwards}
+.pr-jnodes::after{animation:prFade .4s ease 2.2s backwards}
+.pr-jnode{animation:prUp .5s cubic-bezier(.22,1,.36,1) backwards}
+.pr-jnode:nth-child(1){animation-delay:1.2s}.pr-jnode:nth-child(2){animation-delay:1.3s}
+.pr-jnode:nth-child(3){animation-delay:1.4s}.pr-jnode:nth-child(4){animation-delay:1.5s}
+.pr-jnode .circle{transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+.pr-jnode:hover .circle{transform:scale(1.18) rotate(-8deg);box-shadow:0 0 0 4px #fff,0 0 0 9px color-mix(in srgb,var(--c) 22%,transparent)}
+.pr-jnode .pt{animation:prDot 2s ease-out 2s infinite;color:var(--c)}
+
+/* ---------- next appointment + messenger ---------- */
+.pr-nbox{transition:background .3s}
+.pr-nbox:hover{background:#e8efed}
+.pr-nbox strong{animation:prUp .6s cubic-bezier(.22,1,.36,1) .95s backwards}
+.pr-nbox span{animation:prPop .5s cubic-bezier(.34,1.56,.64,1) 1.2s backwards}
+.pr-nbox span i{animation:prDot 1.8s ease-out 1.6s infinite;color:#1f7a64}
+.pr-mbox>svg{animation:prFloat 3s ease-in-out infinite}
+.pr-msgs span{animation:prPop .35s cubic-bezier(.34,1.56,.64,1)}
+.pr-minput{transition:box-shadow .25s,background .25s}
+.pr-minput:focus-within{background:#fff;box-shadow:0 0 0 2px rgba(47,133,119,.35)}
+.pr-minput button{transition:color .2s,transform .25s}
+.pr-minput button:hover{transform:translateX(3px) rotate(-12deg)}
+.pr-minput button:active{transform:scale(.8)}
+
+/* ---------- alerts ---------- */
+.pr-alert{animation:prSlideR .5s cubic-bezier(.22,1,.36,1) backwards;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+.pr-alert:nth-of-type(1){animation-delay:.6s}.pr-alert:nth-of-type(2){animation-delay:.72s}.pr-alert:nth-of-type(3){animation-delay:.84s}
+.pr-alert:hover{transform:translateX(-4px) scale(1.015);box-shadow:0 8px 18px rgba(0,0,0,.08)}
+.pr-alert.pr-lv-high{animation:prSlideR .5s cubic-bezier(.22,1,.36,1) .6s backwards,prAlertGlow 2s ease-in-out 1.4s infinite}
+.pr-alert.pr-lv-high b svg{animation:prWiggle 3s ease-in-out 1.5s infinite;transform-origin:50% 80%}
+.pr-alert.pr-lv-mid b svg{animation:prWiggle 4s ease-in-out 2s infinite}
+.pr-newalert{animation:prUp .35s ease backwards}
+.pr-add svg{transition:transform .3s cubic-bezier(.34,1.56,.64,1)}
+.pr-add:hover svg{transform:rotate(90deg) scale(1.2)}
+.pr-add:active{transform:scale(.94)}
+
+/* ---------- radiology / scans ---------- */
+.pr-rad h4{animation:prFade .6s ease .9s backwards}
+.pr-scans figure{animation:prPop .55s cubic-bezier(.34,1.56,.64,1) backwards}
+.pr-scans figure:nth-child(1){animation-delay:1s}.pr-scans figure:nth-child(2){animation-delay:1.12s}.pr-scans figure:nth-child(3){animation-delay:1.24s}
+.pr-scans img,.pr-scans .scan{transition:transform .4s cubic-bezier(.34,1.56,.64,1),box-shadow .4s}
+.pr-scans figure:hover img,.pr-scans figure:hover .scan{transform:scale(1.12) rotate(-2deg);box-shadow:0 10px 22px rgba(0,0,0,.28)}
+.pr-scans figcaption{transition:color .25s}
+.pr-scans figure:hover figcaption{color:var(--teal)}
+
+/* ---------- back button ---------- */
+.pr-back svg{transition:transform .25s}
+.pr-back:hover svg{transform:translateX(-3px)}
+
+/* ---------- respect reduced motion ---------- */
+@media(prefers-reduced-motion:reduce){
+  .pr-page *,.pr-page *::before,.pr-page *::after{
+    animation-duration:.01s!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01s!important}
+} 

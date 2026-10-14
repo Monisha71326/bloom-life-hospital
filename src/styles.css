@@ -1,0 +1,424 @@
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#f3f4f6;--card:#fff;--ink:#23262b;--mut:#8b9098;--line:#e6e8ec;--blue:#d7eefb}
+body{font-family:Poppins,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:12px}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+html,body{height:100%}
+.page{width:100%;height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden;padding:0}
+/* only this area scrolls, so nothing slides behind the navbar */
+.content{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:6px 28px 14px}
+/* fixed top navbar (content scrolls in .content below it) */
+.top{position:relative;flex:none;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 28px 8px;background:var(--bg)}
+.brand{display:flex;align-items:center;gap:6px;line-height:1.1}
+.brand b{color:#d6337f;font-size:15px;letter-spacing:1px}.brand span{color:#5b3b8c;font-size:15px;letter-spacing:3px;margin-left:4px}.brand small{display:block;font-size:8px;color:var(--mut)}
+.nav{display:flex;gap:2px;background:#fff;border-radius:30px;padding:8px 12px;box-shadow:0 3px 14px rgba(0,0,0,.07)}
+.tab{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:10px;font-size:11.5px;white-space:nowrap;transition:background .2s}
+.tab.on{background:#d3ecf9;color:#1b8fc4;font-weight:500}
+.foot{position:relative;flex:none;z-index:50;padding:8px 28px 12px;background:var(--bg)}
+.nav.bottom{width:100%;justify-content:center;border-radius:34px;box-shadow:0 -2px 18px rgba(0,0,0,.1)}
+.acts{display:flex;align-items:center;gap:12px}.me{width:34px;height:34px;border-radius:50%;object-fit:cover}
+.bell{position:relative}.bell i{position:absolute;top:0;right:1px;width:7px;height:7px;background:#ef3a3a;border-radius:50%}
+.card{background:var(--card);border-radius:18px;padding:18px;border:1px solid #eceef1}
+h3{font-size:12.5px;font-weight:600}
+.strip{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#fff;border-radius:14px;padding:16px 20px;margin-bottom:14px}
+.strip h2{font-size:15px;color:#e7957d;font-weight:600}.strip h2 small{font-size:11px;color:var(--mut);font-weight:400;margin-left:4px}
+.strip p{color:#555;margin-top:4px}
+.mid{display:flex;align-items:center;gap:30px;padding:10px 24px;background:#f7f7f9;border-radius:16px}
+.mid p{margin:0;display:flex;align-items:baseline;gap:10px;white-space:nowrap}
+.mid .pn{display:flex;flex-direction:column}.mid .pn b{font-size:13px;font-weight:600}.mid em{display:block;font-size:9.5px;color:var(--mut);font-style:normal;margin-top:1px}
+.mid .wait b{font-size:13px;font-weight:600}
+.c1{color:#21a9d6}.c2{color:#e38cc2}
+.doc{display:flex;align-items:center;gap:10px;background:#f4f5f7;padding:10px 14px;border-radius:14px}.doc div{display:flex;flex-direction:column}.doc small{color:var(--mut);font-size:10px}
+.row2{display:grid;grid-template-columns:1.6fr 1fr;gap:14px;margin-bottom:14px}
+.row3{display:grid;grid-template-columns:1fr 1.25fr;gap:14px;margin-bottom:14px}
+.row3 .onl{grid-column:2} /* full width venumna: grid-column:1/-1 */
+.row4{display:grid;grid-template-columns:1.9fr 1fr;gap:14px;margin-bottom:14px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0 6px}
+.stat{border:1px solid var(--line);border-radius:14px;padding:8px 10px}.stat div{display:flex;justify-content:space-between;font-size:9.5px;margin-bottom:6px}.stat b{font-weight:600}.stat i{display:block;height:3px;border-radius:3px}
+.all{display:block;text-align:right;font-size:10px;color:#666;margin-bottom:6px}
+.pts{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.ptw{position:relative;text-align:center;padding-top:14px}.ptw em{display:block;margin-top:8px;font-style:normal;font-size:11px;color:#444}
+.prio{position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:1;font-size:8px;color:#fff;padding:2px 12px;border-radius:8px}
+.prio.High{background:#ef1c1c}.prio.Medium{background:#f7c21c}.prio.Low{background:#2fc44a}
+.pt{width:100%;display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 4px;border:1px solid var(--line);border-radius:14px;transition:background .2s}
+.pt.on{background:#bfe3f7}.pt img{width:54px;height:54px;border-radius:50%;object-fit:cover;margin-bottom:6px}
+.pt b{font-size:11.5px;font-weight:500}.pt span{font-size:9.5px;color:var(--mut)}.pt small{font-size:7.5px;color:#a4a8ae}
+/* calendar */
+.calh{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.calh b{font-weight:500}
+.calh button{width:28px;height:28px;border-radius:50%;background:#eef0f2;display:grid;place-items:center}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px 4px;justify-items:center}.dow{font-size:11px;font-weight:500;padding-bottom:4px}
+.day{position:relative;width:30px;height:30px;border-radius:50%;font-size:11px;background:#fff}
+.day::before{content:"";position:absolute;inset:0;border-radius:50%;padding:2px;background:var(--ring);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+.day.sel{background:#e8f6fc;font-weight:600}
+.legend{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px;margin-top:16px;font-size:9.5px}.legend i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:4px}
+/* online (old .oi kept for other pages) */
+.onh{display:flex;align-items:center;gap:14px;padding-bottom:10px;border-bottom:1px solid var(--line);margin-bottom:12px}.onh>div:first-child{flex:1}.onh small{font-size:9.5px;color:#555}
+.cnt{display:flex;gap:10px;font-size:9.5px;color:var(--mut)}
+.add{width:32px;height:32px;border-radius:50%;background:#3b3fe0;color:#fff;display:grid;place-items:center}
+.ol{border:1px solid var(--line);border-radius:14px;max-height:150px;overflow-y:auto}
+.oi{display:grid;grid-template-columns:34px 1.6fr 1fr 1fr 28px;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.oi:last-child{border:0}.oi b{font-size:12px;font-weight:500}.oi em,.oi small{font-style:normal;font-size:9.5px;color:#777}
+.ic{width:30px;height:30px;border-radius:50%;background:#14a58f;color:#fff;display:grid;place-items:center}.oi:nth-child(n+2) .ic{background:#dcdfe3;color:#555}
+.oi img{width:24px;height:24px;border-radius:6px;object-fit:cover}
+@media(max-width:900px){.top .acts{display:none}.top .nav{display:none}.row2,.row3{grid-template-columns:1fr}.strip{flex-direction:column;align-items:flex-start}.mid{flex-wrap:wrap;gap:12px 24px}.top{padding:12px 16px 8px}.content{padding:6px 16px 14px}.foot{padding:8px 16px 10px}.stats,.pts{grid-template-columns:repeat(2,1fr)}.nav.bottom{overflow-x:auto;justify-content:flex-start}}
+a.tab{text-decoration:none;color:inherit}
+.all{text-decoration:none}
+.bellw{position:relative}.drop{position:absolute;right:0;top:30px;width:210px;background:#fff;border-radius:12px;padding:12px;box-shadow:0 6px 24px rgba(0,0,0,.14);z-index:60}.drop p{padding:5px 0;border-bottom:1px solid var(--line)}.drop button{margin-top:8px;color:#d6337f;font-size:11px}
+.mod{margin-top:4px}.modh{display:flex;align-items:center;gap:12px;margin-bottom:12px}.modh>div{flex:1}.modh small{color:var(--mut)}
+.search{display:flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:20px;padding:6px 12px}.search input{border:0;outline:0;font:inherit;width:150px}
+.btn{display:inline-flex;align-items:center;gap:4px;background:#3b3fe0;color:#fff;border-radius:20px;padding:7px 16px;font-size:11.5px}
+.chips{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}.chips button{padding:5px 14px;border-radius:16px;background:#eef0f2;font-size:11px}.chips .on{background:#d3ecf9;color:#1b8fc4;font-weight:500}
+.frm{display:flex;flex-wrap:wrap;gap:8px;background:#f7f8fa;border-radius:14px;padding:12px;margin-bottom:12px}.frm input,.frm select{flex:1;min-width:120px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;font:inherit;background:#fff}
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse}th{text-align:left;color:var(--mut);font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line)}td{padding:10px;border-bottom:1px solid #f0f1f3}
+.st{border:0;border-radius:12px;padding:4px 8px;font:inherit;font-size:10.5px;background:#eef0f2}.s-Pending,.s-Due,.s-Scheduled{background:#fff3d6}.s-Completed,.s-Done,.s-Active{background:#dcf5e1}.s-Cancelled,.s-Missed{background:#fbdcdc}.s-Ongoing,.s-InProgress{background:#d7eefb}
+.del{color:#d33}.empty{text-align:center;color:var(--mut);padding:24px}
+.login{min-height:100vh;display:grid;place-items:center}.login form{display:flex;flex-direction:column;align-items:center;gap:12px;width:300px;padding:28px}.login input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit}.login small{color:var(--mut);margin-top:-8px}
+
+/* ================= ANIMATIONS ================= */
+
+/* ---------- Patient card click animation ---------- */
+.pt{position:relative;overflow:hidden;transition:background .3s,transform .3s,box-shadow .3s}
+.pt:hover{transform:translateY(-4px);box-shadow:0 8px 18px rgba(0,0,0,.08)}
+.pt:active{transform:scale(.95)}
+.pt.on{animation:cardPop .6s cubic-bezier(.34,1.56,.64,1)}
+.pt.on::after{content:"";position:absolute;left:50%;top:40%;width:20px;height:20px;border-radius:50%;background:rgba(27,143,196,.35);transform:translate(-50%,-50%) scale(0);animation:ripple .8s ease-out;pointer-events:none}
+.pt.on img{box-shadow:0 0 0 3px #fff,0 0 0 5px #1b8fc4;animation:avatarSpin .8s cubic-bezier(.34,1.56,.64,1),avatarPulse 2s .8s infinite}
+.pt.on b,.pt.on span,.pt.on small{animation:slideUp .5s both}
+.pt.on b{animation-delay:.15s}
+.pt.on span{animation-delay:.25s}
+.pt.on small{animation-delay:.35s}
+.pn{animation:slideUp .5s both}
+
+@keyframes cardPop{0%{transform:scale(.9)}50%{transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes ripple{to{transform:translate(-50%,-50%) scale(14);opacity:0}}
+@keyframes avatarSpin{from{transform:rotate(-180deg) scale(.3);opacity:0}to{transform:none;opacity:1}}
+@keyframes avatarPulse{0%,100%{box-shadow:0 0 0 3px #fff,0 0 0 5px #1b8fc4}50%{box-shadow:0 0 0 3px #fff,0 0 0 9px rgba(27,143,196,.2)}}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ---------- Calendar date click (roll) animation ---------- */
+.day{transition:transform .2s,background .2s}
+.day:hover{transform:scale(1.12)}
+.day.sel{animation:dayRoll .7s cubic-bezier(.34,1.56,.64,1)}
+.day.sel::before{animation:ringSpin .8s ease-out}
+@keyframes dayRoll{0%{transform:rotate(-360deg) scale(.4)}60%{transform:rotate(15deg) scale(1.25)}100%{transform:rotate(0) scale(1)}}
+@keyframes ringSpin{from{transform:rotate(0)}to{transform:rotate(720deg)}}
+
+/* ---------- Online appointments: date number roll + rows slide in ---------- */
+.daynum{display:inline-block;animation:numRoll .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes numRoll{from{transform:translateY(-100%) rotateX(90deg);opacity:0}to{transform:none;opacity:1}}
+.oi{animation:rowIn .45s both}
+.oi:nth-child(1){animation-delay:.05s}
+.oi:nth-child(2){animation-delay:.15s}
+.oi:nth-child(3){animation-delay:.25s}
+.oi:nth-child(n+4){animation-delay:.35s}
+@keyframes rowIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:none}}
+
+/* ================= WELCOME POPUP (navbar mela, no blur / no dim) ================= */
+.wel{position:fixed;top:0;left:0;right:0;z-index:9999;display:flex;justify-content:center;padding:8px 20px;pointer-events:none}
+.wel-pill{pointer-events:auto;cursor:pointer;position:relative;overflow:hidden;width:min(760px,94vw);text-align:center;
+  padding:14px 36px 18px;border-radius:44px;
+  background:#d7eefb;color:#0ea5e9;border:1px solid rgba(14,165,233,.25);
+  box-shadow:0 12px 32px rgba(20,38,75,.18);
+  animation:welDrop .7s cubic-bezier(.34,1.56,.64,1) both}
+.wel.out .wel-pill{animation:welLift .5s ease forwards}
+.wel-pill::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);
+  animation:welShine 1.3s .7s ease-out}
+.wel-pill p{margin:0;font-size:15px;line-height:1.5;font-weight:500}
+.wel-t1{animation:welUp .6s .3s both}
+.wel-t2{animation:welUp .6s .5s both}
+.wel-bar{position:absolute;left:0;bottom:0;height:3px;width:100%;background:#0ea5e9;opacity:.55;transform-origin:left;
+  animation:welBar var(--ms,3500ms) linear forwards}
+
+@keyframes welDrop{0%{opacity:0;transform:translateY(-110%) scale(.85)}100%{opacity:1;transform:none}}
+@keyframes welLift{to{opacity:0;transform:translateY(-110%) scale(.9)}}
+@keyframes welUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes welShine{to{left:140%}}
+@keyframes welBar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+
+@media(max-width:600px){
+  .wel-pill{padding:12px 20px 16px;border-radius:28px}
+  .wel-pill p{font-size:12.5px}
+}
+@media(prefers-reduced-motion:reduce){
+  .wel,.wel *{animation-duration:.01s!important;animation-delay:0s!important}
+}
+
+/* ================= ONLINE APPOINTMENTS (screenshot style) ================= */
+.onl .onh{align-items:flex-start;border-bottom:1px solid #bbb}
+.dline{display:flex;align-items:center;gap:6px;margin-top:6px;font-weight:500}
+.dline .daynum{width:18px;height:18px;border:1px solid #ccc;border-radius:50%;display:inline-grid;place-items:center;font-size:8px}
+.onl .ol{border-radius:18px;max-height:none;padding:6px 14px}
+.oi2{display:grid;grid-template-columns:36px 1.2fr 1fr 1fr 1fr 36px;align-items:center;gap:8px;padding:12px 0;border-bottom:1px solid #bbb;animation:rowIn .45s both}
+.oi2:last-child{border:0}
+.oi2:nth-child(2){animation-delay:.12s}.oi2:nth-child(3){animation-delay:.24s}
+.oi2 b{font-size:14px;font-weight:600}
+.oi2 em{font-style:normal;font-size:10px;color:#777;grid-column:3}
+.oi2 small{font-size:10.5px;color:#555;grid-column:5}
+.ic2,.ic3{width:34px;height:34px;border-radius:50%;background:#cfd6d6;color:#333;display:grid;place-items:center}
+.ic3:empty{background:none}
+.mid2{grid-column:3/5;grid-row:1}
+.avs{display:flex;align-items:center}
+.avs img{width:24px;height:24px;border-radius:50%;border:2px solid #fff;margin-left:-6px;object-fit:cover}
+.avs img:first-child{margin-left:0}
+.avs i{width:24px;height:24px;border-radius:50%;background:#f28b8b;font-style:normal;font-size:8px;display:grid;place-items:center;margin-left:-6px;border:2px solid #fff}
+
+/* ================= SCHEDULE ================= */
+.sch-h{display:flex;justify-content:space-between;align-items:flex-start;padding-bottom:12px;border-bottom:1px solid #bbb;margin-bottom:16px}
+.sch-h small{color:var(--mut);font-size:10px}
+.rng{display:flex;gap:4px}
+.rng button{padding:5px 10px;border-radius:6px;color:#0b6b57;font-weight:500;font-size:11.5px}
+.rng .on{background:#e0efec}
+.sch-box{border:1px solid var(--line);border-radius:22px;padding:14px 16px;overflow-x:auto}
+.srow{display:grid;grid-template-columns:100px 1fr;align-items:center}
+.st-t{font-size:10.5px;color:#333}
+.sgrid{position:relative;height:36px;border-bottom:2px solid #cfcfcf;border-top:2px solid #cfcfcf;margin-top:-2px;
+  background:repeating-linear-gradient(90deg,transparent 0,transparent calc(14.28% - 2px),#cfcfcf calc(14.28% - 2px),#cfcfcf 14.28%);
+  border-left:2px solid #cfcfcf;border-right:2px solid #cfcfcf}
+.sbar{position:absolute;left:4px;top:4px;height:28px;border-radius:0 8px 8px 0;display:flex;align-items:center;gap:14px;padding:0 12px 0 34px;font-size:9px;white-space:nowrap;overflow:hidden;animation:rowIn .5s both}
+.sbar::before{content:"";position:absolute;left:-4px;top:0;bottom:0;width:8px;background:var(--edge);border-radius:8px 0 0 8px}
+.sbar img{position:absolute;left:4px;top:3px;width:22px;height:22px;border-radius:6px;object-fit:cover;z-index:1}
+.sbar b{font-weight:500;font-size:11px;min-width:56px}
+.sbar span,.sbar small,.sbar em{font-style:normal;font-size:8.5px}
+.sbar span{min-width:88px}
+
+/* ================= PATIENTS OVERVIEW ================= */
+.ov-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.ov-h h3{font-size:14px}
+/* scoped to .selw so it doesn't hit the calendar's .day.sel */
+.selw .sel{display:flex;align-items:center;gap:22px;border:1px solid #ccc;border-radius:6px;padding:5px 12px;font-size:10px;font-weight:500}
+.chart{display:flex;gap:8px;height:210px}
+.yax{display:flex;flex-direction:column;justify-content:space-between;font-size:11px;padding:6px 0 0;border-right:1px solid #ddd;padding-right:8px}
+.yax b{font-size:11px}
+.bars{flex:1;display:flex;align-items:flex-end;justify-content:space-around;border-bottom:1px solid #ddd;padding:0 4px}
+.bcol{height:100%;width:50px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;cursor:pointer}
+.bcol em{font-style:normal;font-size:8px;border:1px solid #bbb;border-radius:8px;padding:0 5px;margin-bottom:3px;color:#555}
+.bcol i{display:block;width:100%;border-radius:10px 10px 4px 4px;background:#c9fbfb;transition:height .5s,background .3s}
+.bcol i.on{background:#00f5f5}
+.bcol:hover i{background:#8ff3f3}
+.xax{display:flex;justify-content:space-around;align-items:center;margin-top:12px;font-size:11.5px}
+.xax b{font-weight:600}
+.olg{display:flex;justify-content:center;gap:12px;margin-top:14px;font-size:8.5px}
+.olg span{display:flex;align-items:center;gap:4px;padding:3px 8px;border-radius:4px}
+.olg .on{background:#c9fbfb}
+.olg i{width:8px;height:8px;border-radius:50%;display:inline-block}
+
+@media(max-width:900px){
+  .row4{grid-template-columns:1fr}
+  .row3 .onl{grid-column:1}
+  .oi2{grid-template-columns:34px 1fr auto}
+  .oi2 em,.mid2{display:none}
+  .oi2 small{grid-column:auto}
+}
+
+/* ================= INTERACTIONS (added) ================= */
+
+/* ---------- Online appointments: click to complete ---------- */
+.oi2{cursor:pointer;transition:background .25s,padding .25s}
+.oi2:hover{background:#f6f9f9}
+.oi2 b,.oi2 small,.oi2 em{transition:opacity .3s,color .3s}
+.ic2{transition:background .3s,color .3s,transform .3s}
+.oi2:hover .ic2{transform:scale(1.1)}
+.oi2.done b{text-decoration:line-through;opacity:.45}
+.oi2.done small,.oi2.done em{opacity:.45}
+.oi2.done .ic2{background:#14a58f;color:#fff;animation:tick .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes tick{0%{transform:scale(.4) rotate(-90deg)}100%{transform:none}}
+.cnt span{display:inline-block;min-width:78px}
+
+/* ---------- Schedule ---------- */
+.rng button{transition:background .25s,color .25s,transform .2s}
+.rng button:hover{background:#eef6f4;transform:translateY(-1px)}
+.rng .on{background:#e0efec}
+.sbar{cursor:pointer;
+  animation:barReveal .7s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i) * .09s);
+  transition:transform .2s,box-shadow .2s,filter .2s}
+.sbar:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(0,0,0,.16);filter:brightness(1.05)}
+.sbar.picked{box-shadow:0 0 0 2px var(--edge),0 6px 14px rgba(0,0,0,.18);filter:brightness(1.05)}
+.sbar img{transition:transform .3s}
+.sbar:hover img{transform:scale(1.15) rotate(-6deg)}
+@keyframes barReveal{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.srow .st-t{animation:slideUp .4s both;animation-delay:calc(var(--i,0) * .05s)}
+.pickinfo{margin-top:10px;padding:8px 14px;border-radius:12px;background:#f1f8f6;font-size:10.5px;color:#245;animation:slideUp .35s both}
+
+/* ---------- Patients overview ---------- */
+.selw{position:relative}
+.selw .sel{transition:background .2s,border-color .2s}
+.selw .sel:hover{background:#f4f6f8}
+.selw .sel svg{transition:transform .25s}
+.selw .sel.open svg{transform:rotate(180deg)}
+.menu{position:absolute;right:0;top:calc(100% + 6px);min-width:120px;background:#fff;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.14);padding:4px;z-index:20;animation:menuPop .22s cubic-bezier(.34,1.56,.64,1);transform-origin:top right}
+.menu button{display:block;width:100%;text-align:left;padding:7px 12px;border-radius:7px;font-size:10.5px;transition:background .15s}
+.menu button:hover{background:#eef6f8}
+.menu button.on{background:#d7eefb;color:#1b8fc4;font-weight:500}
+@keyframes menuPop{from{opacity:0;transform:scale(.85) translateY(-6px)}to{opacity:1;transform:none}}
+
+.bars{--lt:#c9fbfb;--dk:#00f5f5}
+.bcol i{background:var(--lt);transform-origin:bottom;
+  animation:barUp .8s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i) * .1s);
+  transition:background .3s,filter .3s}
+.bcol i.on{background:var(--dk)}
+.bcol:hover i{background:var(--dk);filter:brightness(1.05)}
+.bcol em{animation:fadeIn .5s both;animation-delay:calc(var(--i) * .1s + .35s)}
+.bcol:hover em{background:#fff;border-color:#888}
+@keyframes barUp{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.xax span{transition:color .25s,transform .25s}
+.xax span.on{color:#0ea5e9;font-weight:600;transform:translateY(-2px)}
+
+.olg button{display:flex;align-items:center;gap:4px;padding:3px 8px;border-radius:4px;font-size:8.5px;transition:background .25s,transform .2s}
+.olg button:hover{transform:translateY(-2px);background:#f1f3f5}
+.olg button.on{font-weight:500}
+.olg button i{width:8px;height:8px;border-radius:50%;display:inline-block}
+
+@media(prefers-reduced-motion:reduce){
+  .sbar,.bcol i,.bcol em,.menu,.pickinfo,.oi2.done .ic2{animation-duration:.01s!important;animation-delay:0s!important}
+}
+
+/* ================= EXTRA ANIMATIONS (v2) ================= */
+
+/* ---------- Page load: sections stagger in ---------- */
+@keyframes secUp{from{opacity:0;transform:translateY(24px) scale(.98)}to{opacity:1;transform:none}}
+main>*{animation:secUp .7s cubic-bezier(.22,1,.36,1) both}
+main>*:nth-child(1){animation-delay:.05s}
+main>*:nth-child(2){animation-delay:.18s}
+main>*:nth-child(3){animation-delay:.31s}
+main>*:nth-child(4){animation-delay:.44s}
+
+/* card soft lift on hover */
+.card{transition:box-shadow .3s,transform .3s}
+.card:hover{box-shadow:0 10px 28px rgba(20,38,75,.08)}
+
+/* ---------- Top strip ---------- */
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}45%{transform:scale(1.18)}60%{transform:scale(1)}}
+.doc svg{animation:beat 1.6s ease-in-out infinite;transform-origin:center}
+.doc{transition:transform .25s,box-shadow .25s}
+.doc:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.08)}
+.strip h2 small{display:inline-block;animation:timeBlink 2s ease-in-out infinite}
+@keyframes timeBlink{0%,100%{opacity:1}50%{opacity:.45}}
+.mid .wait b{display:inline-block;animation:waitPulse 1.8s ease-in-out infinite}
+@keyframes waitPulse{0%,100%{transform:scale(1);color:inherit}50%{transform:scale(1.18);color:#ef3a3a}}
+
+/* ---------- Bell notification ping ---------- */
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(239,58,58,.6)}80%,100%{box-shadow:0 0 0 8px rgba(239,58,58,0)}}
+.bell i{animation:ping 1.6s ease-out infinite}
+.bell{transition:transform .25s}
+.bell:hover{animation:ring .6s ease}
+@keyframes ring{0%,100%{transform:rotate(0)}20%{transform:rotate(18deg)}40%{transform:rotate(-16deg)}60%{transform:rotate(10deg)}80%{transform:rotate(-6deg)}}
+
+/* ---------- Navbar tabs ---------- */
+.tab{position:relative;transition:background .25s,color .25s,transform .2s}
+.tab:hover{background:#eef6fb;transform:translateY(-2px)}
+.tab.on{animation:tabPop .45s cubic-bezier(.34,1.56,.64,1)}
+@keyframes tabPop{from{transform:scale(.85)}to{transform:scale(1)}}
+.tab svg{transition:transform .3s}
+.tab:hover svg{transform:scale(1.2) rotate(-8deg)}
+
+/* ---------- Stats cards ---------- */
+@keyframes statFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.stat{transition:transform .25s,box-shadow .25s,border-color .25s;animation:slideUp .5s both}
+.stat:nth-child(1){animation-delay:.35s}.stat:nth-child(2){animation-delay:.42s}.stat:nth-child(3){animation-delay:.49s}
+.stat:nth-child(4){animation-delay:.56s}.stat:nth-child(5){animation-delay:.63s}
+.stat:hover{transform:translateY(-4px);box-shadow:0 8px 18px rgba(0,0,0,.08);border-color:#cfe6f2}
+.stat i{transform-origin:left;animation:statFill 1s cubic-bezier(.22,1,.36,1) .7s both}
+.all{transition:transform .25s,color .25s}
+.all:hover{transform:translateX(-4px);color:#1b8fc4}
+
+/* ---------- Patient cards: stagger + priority bounce ---------- */
+.ptw{animation:slideUp .55s both}
+.ptw:nth-child(1){animation-delay:.5s}.ptw:nth-child(2){animation-delay:.58s}.ptw:nth-child(3){animation-delay:.66s}
+.ptw:nth-child(4){animation-delay:.74s}.ptw:nth-child(5){animation-delay:.82s}
+.prio{animation:prioBob 2.2s ease-in-out infinite}
+@keyframes prioBob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-2px)}}
+.prio.High{animation:prioBob 2.2s ease-in-out infinite,prioGlow 1.6s ease-in-out infinite}
+@keyframes prioGlow{0%,100%{box-shadow:0 0 0 0 rgba(239,28,28,.5)}50%{box-shadow:0 0 0 5px rgba(239,28,28,0)}}
+.pt img{transition:transform .35s}
+.pt:hover img{transform:scale(1.08)}
+.ptw em{transition:color .25s}
+.ptw:hover em{color:#1b8fc4}
+
+/* ---------- Calendar ---------- */
+@keyframes dayIn{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
+.grid .day{animation:dayIn .4s cubic-bezier(.34,1.56,.64,1) both}
+.grid .day:nth-child(n+8){animation-delay:.02s}
+.grid .day:nth-child(n+12){animation-delay:.06s}
+.grid .day:nth-child(n+19){animation-delay:.1s}
+.grid .day:nth-child(n+26){animation-delay:.14s}
+.grid .day:nth-child(n+33){animation-delay:.18s}
+.day.sel{animation:dayRoll .7s cubic-bezier(.34,1.56,.64,1)}
+.day:hover::before{animation:ringSpin 1s linear infinite}
+.day.sel:hover::before{animation:ringSpin .8s ease-out}
+.calh button{transition:background .2s,transform .2s}
+.calh button:hover{background:#d3ecf9;transform:scale(1.12)}
+.calh button:active{transform:scale(.9)}
+.calh b{display:inline-block;animation:slideUp .35s both}
+.legend span{transition:transform .2s;cursor:default}
+.legend span:hover{transform:translateY(-2px)}
+.legend span:hover i{animation:dotPulse .8s ease-in-out infinite}
+@keyframes dotPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.7)}}
+
+/* ---------- Online appointments ---------- */
+.oi2:active{transform:scale(.985)}
+.oi2:hover b{color:#0b6b57}
+.oi2:not(.done) .ic2 svg{animation:iconWiggle 3s ease-in-out infinite}
+@keyframes iconWiggle{0%,90%,100%{transform:rotate(0)}93%{transform:rotate(-14deg)}96%{transform:rotate(12deg)}}
+.avs img{transition:transform .25s,margin .25s}
+.avs:hover img{margin-left:2px}
+.avs:hover img:first-child{margin-left:0}
+.avs img:hover{transform:translateY(-3px) scale(1.15);z-index:2}
+.avs i{animation:ping2 2s ease-out infinite}
+@keyframes ping2{0%{box-shadow:0 0 0 0 rgba(242,139,139,.6)}80%,100%{box-shadow:0 0 0 7px rgba(242,139,139,0)}}
+.cnt span{transition:transform .2s}
+.cnt span:hover{transform:translateY(-2px)}
+
+/* ---------- Schedule ---------- */
+.sbar{position:absolute}
+.sbar::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);pointer-events:none}
+.sbar:hover::after{animation:welShine .9s ease-out}
+.sbar.picked::before{animation:edgePulse 1.4s ease-in-out infinite}
+@keyframes edgePulse{0%,100%{width:8px}50%{width:12px}}
+.sch-box{transition:box-shadow .3s}
+.sch-box:hover{box-shadow:inset 0 0 0 1px #d9eeea}
+.rng .on{animation:tabPop .35s cubic-bezier(.34,1.56,.64,1)}
+
+/* ---------- Patients overview ---------- */
+.bcol i.on{box-shadow:0 0 14px var(--dk);animation:barUp .8s cubic-bezier(.22,1,.36,1) both,barGlow 2s 1s ease-in-out infinite;animation-delay:calc(var(--i) * .1s),1s}
+@keyframes barGlow{0%,100%{box-shadow:0 0 6px var(--dk)}50%{box-shadow:0 0 18px var(--dk)}}
+.bcol:hover em{transform:translateY(-3px);transition:transform .2s,background .2s}
+.bcol{transition:transform .2s}
+.bcol:active{transform:scale(.94)}
+.yax span{animation:fadeIn .5s both}
+.yax span:nth-child(2){animation-delay:.08s}.yax span:nth-child(3){animation-delay:.16s}
+.yax span:nth-child(4){animation-delay:.24s}.yax span:nth-child(5){animation-delay:.32s}
+.olg button.on{animation:tabPop .35s cubic-bezier(.34,1.56,.64,1)}
+.olg button:active{transform:scale(.92)}
+
+/* ---------- Buttons / forms (other pages) ---------- */
+.btn{position:relative;overflow:hidden;transition:transform .2s,box-shadow .25s,background .25s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(59,63,224,.35)}
+.btn:active{transform:scale(.96)}
+.btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-20deg)}
+.btn:hover::after{animation:welShine .8s ease-out}
+.chips button{transition:background .2s,transform .2s}
+.chips button:hover{transform:translateY(-2px)}
+.search{transition:box-shadow .25s,border-color .25s,width .25s}
+.search:focus-within{border-color:#1b8fc4;box-shadow:0 0 0 3px rgba(27,143,196,.15)}
+.frm{animation:slideUp .35s both}
+.frm input:focus,.frm select:focus,.login input:focus{outline:0;border-color:#1b8fc4;box-shadow:0 0 0 3px rgba(27,143,196,.15);transition:box-shadow .2s}
+tbody tr{animation:rowIn .4s both;transition:background .2s}
+tbody tr:hover{background:#f6f9fb}
+tbody tr:nth-child(1){animation-delay:.03s}tbody tr:nth-child(2){animation-delay:.06s}tbody tr:nth-child(3){animation-delay:.09s}
+tbody tr:nth-child(4){animation-delay:.12s}tbody tr:nth-child(n+5){animation-delay:.15s}
+.drop{animation:menuPop .22s cubic-bezier(.34,1.56,.64,1);transform-origin:top right}
+.login form{animation:secUp .7s cubic-bezier(.22,1,.36,1) both}
+
+/* ---------- Nice scrollbar + focus ---------- */
+.content::-webkit-scrollbar,.ol::-webkit-scrollbar,.sch-box::-webkit-scrollbar{width:6px;height:6px}
+.content::-webkit-scrollbar-thumb,.ol::-webkit-scrollbar-thumb,.sch-box::-webkit-scrollbar-thumb{background:#cfd6d9;border-radius:6px}
+.content::-webkit-scrollbar-thumb:hover{background:#a9b4b8}
+button:focus-visible,a:focus-visible{outline:2px solid #1b8fc4;outline-offset:2px;border-radius:8px}
+
+@media(prefers-reduced-motion:reduce){
+  main>*,.stat,.stat i,.ptw,.prio,.grid .day,.doc svg,.bell i,.avs i,.bcol i.on,.oi2 svg,.sbar::after,tbody tr,.mid .wait b,.strip h2 small{
+    animation-duration:.01s!important;animation-delay:0s!important;animation-iteration-count:1!important}
+}

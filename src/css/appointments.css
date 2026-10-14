@@ -1,0 +1,210 @@
+/* =====================================================
+   APPOINTMENTS PAGE  (all classes prefixed  ap-  so they
+   never clash with dashboard.css)
+   Import in Appointments.jsx:  import "../css/appointments.css";
+   ===================================================== */
+
+.ap-page{padding:4px 0 10px}
+.ap-title{font-size:19px;font-weight:600;margin:6px 0 16px;letter-spacing:.1px}
+
+.ap-layout{display:grid;grid-template-columns:250px 1fr;gap:14px;align-items:stretch}
+
+.ap-panel{background:#fff;border-radius:16px;border:1px solid #eceef1;padding:18px}
+
+/* ---------------- LEFT : patient list ---------------- */
+.ap-side h3{font-size:13px;font-weight:600;margin-bottom:14px}
+/* left panel is exactly as tall as the right panel; the list scrolls inside it (like the design) */
+.ap-side{position:relative;min-height:420px}
+.plist{position:absolute;left:18px;right:12px;top:52px;bottom:18px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;padding-right:4px}
+.ap-row{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 11px;border-radius:10px;
+  background:#f5f6f8;border:1px solid transparent;
+  transition:background .25s,border-color .25s,transform .2s,box-shadow .25s}
+.ap-row:hover{background:#eef1f5;transform:translateX(4px)}
+.ap-row:active{transform:scale(.97)}
+.ap-num{flex:none;width:24px;height:24px;border-radius:50%;background:#e8eaee;color:#6b7280;
+  display:grid;place-items:center;font-size:10px;font-weight:500;transition:background .25s,color .25s,transform .3s}
+.ap-row b{display:block;font-size:11.5px;font-weight:500;line-height:1.3}
+.ap-row small{display:block;font-size:9.5px;color:var(--mut)}
+.ap-row.on{background:#e3f8ec;border-color:#86dcae;box-shadow:0 4px 12px rgba(22,179,100,.12)}
+.ap-row.on .ap-num{background:#16b364;color:#fff;transform:scale(1.1)}
+
+/* ---------------- RIGHT : toolbar ---------------- */
+.ap-bar{display:flex;gap:12px;margin-bottom:18px}
+.ap-search{flex:1;display:flex;align-items:center;gap:10px;background:#eef1f5;border-radius:10px;padding:10px 14px;color:#6b7280;
+  border:1px solid transparent;transition:border-color .25s,box-shadow .25s,background .25s}
+.ap-search:focus-within{background:#fff;border-color:#1b8fc4;box-shadow:0 0 0 3px rgba(27,143,196,.14)}
+.ap-search input{flex:1;border:0;outline:0;background:none;font:inherit;font-size:12px;color:var(--ink)}
+.ap-search svg{transition:transform .3s}
+.ap-search:focus-within svg{transform:scale(1.15);color:#1b8fc4}
+.ap-filter{position:relative;flex:none;width:122px}
+.ap-filter select{width:100%;appearance:none;-webkit-appearance:none;border:1px solid transparent;outline:0;background:#eef1f5;border-radius:10px;
+  padding:10px 30px 10px 14px;font:inherit;font-size:11.5px;color:#374151;cursor:pointer;transition:border-color .25s,box-shadow .25s}
+.ap-filter select:focus{border-color:#1b8fc4;box-shadow:0 0 0 3px rgba(27,143,196,.14)}
+.ap-filter svg{position:absolute;right:11px;top:50%;transform:translateY(-50%);pointer-events:none;color:#6b7280}
+
+/* ---------------- RIGHT : cards grid ---------------- */
+.ap-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:22px 14px;grid-auto-flow:dense}
+.ap-item{position:relative;text-align:center;padding-top:8px;
+  animation:apCardIn .55s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--i,0) * .05s + .2s)}
+@keyframes apCardIn{from{opacity:0;transform:translateY(22px) scale(.94)}to{opacity:1;transform:none}}
+
+.ap-prio{position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:2;font-size:8.5px;font-weight:500;line-height:1;
+  padding:4px 0;width:54px;border-radius:9px;letter-spacing:.2px}
+.ap-prio.High{background:#ff0000;color:#fff;animation:apGlow 1.8s ease-in-out infinite}
+.ap-prio.Medium{background:#ffe600;color:#333}
+.ap-prio.Low{background:#39ff14;color:#1b3a12}
+@keyframes apGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,0,0,.45)}50%{box-shadow:0 0 0 5px rgba(255,0,0,0)}}
+
+.ap-card{width:100%;height:180px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;padding:14px 4px 10px;
+  background:#fff;border:1px solid #e3e6ea;border-radius:16px;position:relative;overflow:hidden;
+  transition:transform .3s,box-shadow .3s,border-color .3s,background .3s}
+.ap-card:hover{transform:translateY(-6px);box-shadow:0 12px 24px rgba(20,38,75,.1);border-color:#cfe6f2}
+.ap-card:active{transform:scale(.96)}
+.ap-card img{width:62px;height:62px;flex:none;border-radius:50%;object-fit:cover;margin-bottom:6px;transition:transform .4s cubic-bezier(.34,1.56,.64,1),filter .3s,opacity .3s}
+.ap-card:hover img{transform:scale(1.1) rotate(-3deg)}
+.ap-card b{font-size:13px;font-weight:600;color:#111}
+.ap-card .sub{font-size:9.5px;color:#8b9098;margin-top:1px}
+.ap-card small{font-size:7.5px;color:#9aa0a8;line-height:1.5}
+.ap-chip{display:inline-block;margin-top:2px;font-size:6.5px;padding:2px 8px;border-radius:8px;background:#c6f0cf;color:#1e7a34;border:1px solid #9ddcab}
+.ap-time{display:block;margin-top:9px;font-size:11px;color:#374151;transition:color .25s}
+.ap-item:hover .ap-time{color:#1b8fc4}
+
+/* selected card: design-la card-ku special style illa (left list-la mattum green) */
+
+/* empty state */
+.ap-empty{grid-column:1/-1;text-align:center;color:var(--mut);padding:50px 0;animation:slideUp .4s both}
+
+/* ---------------- page entry + arrive-from-dashboard ---------------- */
+.page-in{animation:pageIn .55s cubic-bezier(.22,1,.36,1) both}
+@keyframes pageIn{from{opacity:0;transform:scale(.97) translateY(18px)}to{opacity:1;transform:none}}
+.ap-title{animation:slideUp .5s .05s both}
+.ap-side{animation:slideInL .55s .1s cubic-bezier(.22,1,.36,1) both}
+.ap-main{animation:slideInR .55s .15s cubic-bezier(.22,1,.36,1) both}
+@keyframes slideInL{from{opacity:0;transform:translateX(-28px)}to{opacity:1;transform:none}}
+@keyframes slideInR{from{opacity:0;transform:translateX(28px)}to{opacity:1;transform:none}}
+.plist>*{animation:rowIn .45s both}
+.plist>*:nth-child(1){animation-delay:.2s}.plist>*:nth-child(2){animation-delay:.26s}.plist>*:nth-child(3){animation-delay:.32s}
+.plist>*:nth-child(4){animation-delay:.38s}.plist>*:nth-child(5){animation-delay:.44s}.plist>*:nth-child(n+6){animation-delay:.5s}
+/* the patient opened from dashboard */
+.ap-row.from-dash,.ap-card.from-dash{animation:arrive .9s .3s cubic-bezier(.34,1.56,.64,1) both,arriveGlow 1.6s 1.2s ease-out 2}
+
+/* nice scrollbar for the list */
+.plist::-webkit-scrollbar{width:5px}
+.plist::-webkit-scrollbar-thumb{background:#d5dade;border-radius:5px}
+
+/* ================= COMPLETED: ash color + kadaisila ================= */
+.ap-card.done{background:#eceef0;border-color:#d9dce0;box-shadow:none}
+.ap-card.done img{filter:grayscale(1);opacity:.55}
+.ap-card.done b{color:#8b9098}
+.ap-card.done .sub,.ap-card.done small{color:#a9aeb5}
+.ap-card.done:hover{transform:none;box-shadow:none;border-color:#d9dce0}
+.ap-card.done:hover img{transform:none}
+.ap-item.done .ap-time,.ap-item.done:hover .ap-time{color:#a9aeb5}
+.ap-chip-done{background:#dcdfe3;color:#6b7280;border-color:#cfd3d8}
+
+/* left list row */
+.ap-row.done{background:#eceef0;opacity:.75}
+.ap-row.done b{color:#8b9098;text-decoration:line-through}
+.ap-row.done .ap-num{background:#d5d8dc;color:#8b9098}
+.ap-row.done.on{border-color:#c9cdd2;box-shadow:none}
+.ap-row.done.on .ap-num{background:#9aa0a8;color:#fff}
+
+/* Complete / Undo button */
+.ap-act{display:block;margin:6px auto 0;padding:4px 14px;border-radius:14px;font-size:9.5px;font-weight:500;
+  background:#16b364;color:#fff;transition:transform .2s,box-shadow .2s,background .2s;animation:slideUp .3s both}
+.ap-act:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(22,179,100,.3)}
+.ap-act:active{transform:scale(.94)}
+.ap-act.undo{background:#e3e6ea;color:#6b7280}
+.ap-act.undo:hover{box-shadow:0 6px 14px rgba(0,0,0,.1)}
+
+/* ================= CANCELLED (person varala): ash + red tint, kadaisila ================= */
+.ap-card.cancel{background:#f3eeee;border-color:#e6d5d5;box-shadow:none}
+.ap-card.cancel img{filter:grayscale(1);opacity:.5}
+.ap-card.cancel b{color:#a08a8a;text-decoration:line-through}
+.ap-card.cancel .sub,.ap-card.cancel small{color:#bfaeae}
+.ap-card.cancel:hover{transform:none;box-shadow:none;border-color:#e6d5d5}
+.ap-card.cancel:hover img{transform:none}
+.ap-item.cancel .ap-time,.ap-item.cancel:hover .ap-time{color:#d06a6a}
+.ap-chip-cancel{background:#fbdcdc;color:#c53030;border-color:#f2b8b8}
+
+.ap-row.cancel{background:#f3eeee;opacity:.75}
+.ap-row.cancel b{color:#a08a8a;text-decoration:line-through}
+.ap-row.cancel .ap-num{background:#e8d3d3;color:#a08a8a}
+.ap-row.cancel.on{border-color:#e0c4c4;box-shadow:none}
+.ap-row.cancel.on .ap-num{background:#d06a6a;color:#fff}
+
+/* action buttons (Complete / Not came / Undo) */
+.ap-acts{display:flex;justify-content:center;gap:6px;margin-top:6px}
+.ap-acts .ap-act{margin:0;padding:4px 10px}
+.ap-act.no{background:#fbdcdc;color:#c53030}
+.ap-act.no:hover{box-shadow:0 6px 14px rgba(197,48,48,.25)}
+
+/* ================= CLICK -> perusa card + details popup ================= */
+.ap-item.open{grid-column:span 3;display:flex;align-items:flex-start;gap:6px;padding-top:8px;text-align:left;
+  animation:apOpen .5s cubic-bezier(.34,1.56,.64,1) both;animation-delay:0s}
+@keyframes apOpen{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:none}}
+
+/* big card (badge idhoda wrapper-ku nadula center-la irukkum) */
+.ap-bigw{position:relative;flex:0 0 34%;padding-top:0}
+.ap-bigw .ap-prio{top:-8px;left:50%;transform:translateX(-50%);z-index:3;width:54px;text-align:center}
+.ap-big{width:100%;display:flex;flex-direction:column;align-items:center;gap:3px;padding:14px 8px 10px;
+  background:#fff;border:1px solid #e3e6ea;border-radius:18px;box-shadow:0 8px 20px rgba(20,38,75,.18);
+  transition:transform .3s,box-shadow .3s}
+.ap-big:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(20,38,75,.22)}
+.ap-big:active{transform:scale(.97)}
+.ap-big img{width:100%;aspect-ratio:1/1.15;border-radius:14px;object-fit:cover;box-shadow:0 6px 14px rgba(20,38,75,.2);
+  animation:apZoom .6s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes apZoom{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+.ap-big b{font-size:15px;font-weight:600;color:#111;margin-top:6px}
+.ap-big em,.ap-detail h4 em{font-style:normal;font-size:8px;font-weight:500}
+.ap-big.done img,.ap-big.cancel img{filter:grayscale(1);opacity:.6}
+.ap-big.done,.ap-big.cancel{background:#f1f2f4}
+
+/* status colours */
+.st-ongoing{color:#ff2d2d}
+.st-scheduled{color:#d98a00}
+.st-completed{color:#16a05a}
+.st-cancelled{color:#c53030}
+
+/* details popup */
+.ap-detail{flex:1;min-width:0;background:#fff;border:1px solid #e3e6ea;border-radius:16px;padding:12px 14px 12px;
+  box-shadow:0 10px 24px rgba(20,38,75,.18);animation:apSlideR .45s .1s cubic-bezier(.22,1,.36,1) both}
+@keyframes apSlideR{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
+.ap-detail header{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.ap-detail h4{font-size:11px;font-weight:600;color:#111;display:flex;align-items:baseline;gap:6px}
+.ap-x{width:16px;height:16px;border-radius:50%;background:#111;color:#fff;display:grid;place-items:center;transition:transform .25s,background .2s}
+.ap-x:hover{transform:rotate(90deg);background:#c53030}
+.ap-detail p{display:grid;grid-template-columns:104px 10px 1fr;align-items:center;gap:2px;font-size:8.5px;color:#6b7280;
+  padding:7px 0;border-bottom:1px solid #eef0f3;margin:0;animation:slideUp .35s both}
+.ap-detail p:nth-of-type(1){animation-delay:.15s}.ap-detail p:nth-of-type(2){animation-delay:.2s}
+.ap-detail p:nth-of-type(3){animation-delay:.25s}.ap-detail p:nth-of-type(4){animation-delay:.3s}
+.ap-detail p:nth-of-type(5){animation-delay:.35s}.ap-detail p:nth-of-type(6){animation-delay:.4s}
+.ap-detail p:last-of-type{border-bottom:0}
+.ap-detail p i{font-style:normal}
+.ap-detail p b{font-weight:500;color:#111;font-size:9px}
+.ap-view{justify-self:start;font-size:9px;font-weight:500;color:#1a5cff;padding:0;transition:transform .2s,color .2s}
+.ap-view:hover{color:#0b3fc4;transform:translateX(3px);text-decoration:underline}
+.ap-detail .ap-acts{margin-top:8px;justify-content:flex-start}
+
+/* ---------------- responsive ---------------- */
+@media(max-width:1250px){.ap-grid{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:1100px){.ap-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:900px){
+  .ap-layout{grid-template-columns:1fr}
+  .ap-side{min-height:0}
+  .plist{position:static;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding-bottom:6px}
+  .ap-row{flex:none;width:auto;min-width:150px}
+  .ap-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:600px){
+  .ap-grid{grid-template-columns:repeat(2,1fr);gap:20px 10px}
+  .ap-item.open{grid-column:span 2;flex-direction:column;align-items:stretch}
+  .ap-bigw{flex:none;width:60%;align-self:center}
+  .ap-bar{flex-direction:column}
+  .ap-filter{width:100%}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .page-in,.ap-title,.ap-side,.ap-main,.plist>*,.ap-item,.ap-big img,.ap-detail,.ap-detail p,.ap-prio.High,.ap-row.from-dash,.ap-card.from-dash{
+    animation-duration:.01s!important;animation-delay:0s!important;animation-iteration-count:1!important}
+}
